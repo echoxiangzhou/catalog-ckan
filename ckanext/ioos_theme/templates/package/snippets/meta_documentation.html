@@ -16,19 +16,21 @@ Example:
         General Documentation
       </td>
       <td width="70%">
-        {% for distributor in h.ioos_theme_get_pkg_item(pkg, "distributor-info") %}
-          {% for doc in distributor['transfer-options'] %}
-            {% if doc['function'] == 'information' %}
-              <p>
-                <a href="{{doc['url']}}">
-                  {{doc['name']}}
-                </a>
-                <br>
-                {{doc['description']}}
-              </p>
-            {% endif %}
+        {% if h.ioos_theme_get_pkg_item(pkg, "distributor-info") %}
+          {% for distributor in h.ioos_theme_get_pkg_item(pkg, "distributor-info") %}
+            {% for doc in distributor['transfer-options'] %}
+              {% if doc['function'] == 'information' %}
+                <p>
+                  <a href="{{doc['url']}}">
+                    {{doc['name']}}
+                  </a>
+                  <br>
+                  {{doc['description']}}
+                </p>
+              {% endif %}
+            {% endfor %}
           {% endfor %}
-        {% endfor %}
+        {% endif %}
       </td>
     </tr>
     <tr>
@@ -36,26 +38,28 @@ Example:
         Associated Documentation
       </td>
       <td width="70%">
-        {% for agginfo in h.ioos_theme_get_pkg_item(pkg, "aggregation-info") %}
-        {{ agginfo['aggregate-dataset-name'] }}
-        <ul>
-          {% for party in agginfo['responsible-party'] %}
-            {% if h.ioos_theme_jsonpath(party, "contact-info.online-resource.url") %}
-              <li>
-                <a href="{{h.ioos_theme_jsonpath(party, "contact-info.online-resource.url")}}">
-                  {{ h.ioos_theme_jsonpath(party, "contact-info.online-resource.name") }}
-                </a>
-                <i>
-                  ({{ h.ioos_theme_jsonpath(party, "contact-info.online-resource.function") }})
-                </i>
-                {% if h.ioos_theme_jsonpath(party, "contact-info.online-resource.description") %}
-                <br> {{ h.ioos_theme_jsonpath(party, "contact-info.online-resource.description") }}
-                {% endif %}
-              </li>
-            {% endif %}
+        {% if h.ioos_theme_get_pkg_item(pkg, "distributor-info") %}
+          {% for agginfo in h.ioos_theme_get_pkg_item(pkg, "aggregation-info") %}
+          {{ agginfo['aggregate-dataset-name'] }}
+          <ul>
+            {% for party in agginfo['responsible-party'] %}
+              {% if h.ioos_theme_jsonpath(party, "contact-info.online-resource.url") %}
+                <li>
+                  <a href="{{h.ioos_theme_jsonpath(party, "contact-info.online-resource.url")}}">
+                    {{ h.ioos_theme_jsonpath(party, "contact-info.online-resource.name") }}
+                  </a>
+                  <i>
+                    ({{ h.ioos_theme_jsonpath(party, "contact-info.online-resource.function") }})
+                  </i>
+                  {% if h.ioos_theme_jsonpath(party, "contact-info.online-resource.description") %}
+                  <br> {{ h.ioos_theme_jsonpath(party, "contact-info.online-resource.description") }}
+                  {% endif %}
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
           {% endfor %}
-        </ul>
-        {% endfor %}
+        {% endif %}
       </td>
     </tr>
   </tbody>
