@@ -56,25 +56,27 @@ Example:
         Dataset Point of Contact
       </td>
       <td>
-        {% for distributor in h.ioos_theme_get_pkg_item(pkg, "distributor-info") %}
-          {% if distributor['distributor-contact']['contact-info'] %}
-            {% set contact = distributor['distributor-contact']['contact-info'] %}
-            {% if distributor['distributor-contact']['individual-name'] %}
-              {{ distributor['distributor-contact']['individual-name'] }}<br>
+        {% if h.ioos_theme_get_pkg_item(pkg, "responsible-parties") %}
+          {% for distributor in h.ioos_theme_get_pkg_item(pkg, "distributor-info") %}
+            {% if distributor['distributor-contact']['contact-info'] %}
+              {% set contact = distributor['distributor-contact']['contact-info'] %}
+              {% if distributor['distributor-contact']['individual-name'] %}
+                {{ distributor['distributor-contact']['individual-name'] }}<br>
+              {% endif %}
+              {% if distributor['distributor-contact']['organisation-name'] %}
+                {{ distributor['distributor-contact']['organisation-name'] }}<br>
+              {% endif %}
+              {% if contact.phone.voice %}
+                {{ contact.phone.voice }}<br>
+              {% endif %}
+              {% if contact.email %}
+              <a href="mailto:{{contact.email}}">
+                {{ contact.email }}
+              </a>
+              {% endif %}
             {% endif %}
-            {% if distributor['distributor-contact']['organisation-name'] %}
-              {{ distributor['distributor-contact']['organisation-name'] }}<br>
-            {% endif %}
-            {% if contact.phone.voice %}
-              {{ contact.phone.voice }}<br>
-            {% endif %}
-            {% if contact.email %}
-            <a href="mailto:{{contact.email}}">
-              {{ contact.email }}
-            </a>
-            {% endif %}
-          {% endif %}
-        {% endfor %}
+          {% endfor %}
+        {% endif %}
       </td>
     </tr>
   </tbody>
