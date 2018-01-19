@@ -49,7 +49,7 @@ setup(
 
 
     # What does your project relate to?
-    keywords='''CKAN IOOS,CKAN,Oceans,Observing Systems,Coastlines,Great Lakes''',
+    keywords='''MSDC,CKAN IOCAS,CKAN,Oceans,Observing Systems,Coastlines,Great Lakes''',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
