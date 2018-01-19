@@ -38,7 +38,7 @@ Example:
         Associated Documentation
       </td>
       <td width="70%">
-        {% if h.ioos_theme_get_pkg_item(pkg, "distributor-info") %}
+        {% if h.ioos_theme_get_pkg_item(pkg, "aggregation-info") %}
           {% for agginfo in h.ioos_theme_get_pkg_item(pkg, "aggregation-info") %}
           {{ agginfo['aggregate-dataset-name'] }}
           <ul>
