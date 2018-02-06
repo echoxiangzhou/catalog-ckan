@@ -21,10 +21,13 @@ services:
   redis:
     image: redis:3.0.7-alpine
     container_name: redis
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
 
   ckan:
-    image: ioos/catalog-docker-ckan:latest
-    container_name: ckan
+    image: iocas/catalog-docker-ckan:v1
+    container_name: iocas_ckan
     env_file: env
     ports:
       - "8080:8080"
@@ -36,10 +39,18 @@ services:
 
   pycsw:
     image: ioos/catalog-docker-pycsw:latest
-    container_name: pycsw
+    container_name: ioos-pycsw
     env_file: env
     ports:
       - "8081:8080"
+
+  waf:
+    image: lukecampbell/docker-waf
+    container_name: iocas_waf
+    volumes:
+      - "./waf_data:/usr/share/nginx/html/waf"
+    ports:
+      - "3001:80"
 
 volumes:
   solr_core_data:
@@ -49,4 +60,6 @@ volumes:
   pg_data:
     external:
       name: pg_data
-
+ 
+  redis_data:
+  waf_data:
